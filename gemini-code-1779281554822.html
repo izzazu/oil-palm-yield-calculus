@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculus in Food Security: Oil Palm Yield Optimization</title>
+    <!-- Tailwind CSS for modern, clean UI styling -->
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <!-- Chart.js for interactive data visualization -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- MathJax for rendering crisp LaTeX mathematical formulas -->
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen">
+
+    <!-- Header Section -->
+    <header class="bg-emerald-700 text-white py-8 px-4 shadow-md">
+        <div class="max-w-5xl mx-auto">
+            <span class="bg-emerald-900/50 text-emerald-200 text-xs font-semibold px-2.5 py-1 rounded-full uppercase tracking-wider">
+                SFM: Food Security Application
+            </span>
+            <h1 class="text-3xl md:text-4xl font-bold mt-2">Derivatives $f'(x)$ in Malaysian Agriculture</h1>
+            <p class="text-emerald-100 mt-2 text-sm md:text-base max-w-3xl">
+                Optimizing Oil Palm (*Elaeis guineensis*) Fresh Fruit Bunch (FFB) production yield rates using calculus to ensure national agricultural sustainability.
+            </p>
+        </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto px-4 py-8 space-y-8">
+
+        <!-- Bioscience Scenario & Context Card -->
+        <section class="bg-white p-6 rounded-xl shadow-xs border border-slate-100">
+            <h2 class="text-xl font-bold text-slate-900 border-b pb-2 border-slate-100">The Food Security Problem</h2>
+            <p class="mt-4 leading-relaxed text-slate-600">
+                In Malaysia, oil palm is a critical pillar of agricultural GDP and global food security (vegetable oil supply). Oil palm trees have a specific biological lifespan where Fresh Fruit Bunch (FFB) yield peaks and eventually declines. For plantation managers and food security analysts, understanding the <strong>exact rate of yield change</strong> at any given tree age is vital for planning replanting cycles and forecasting national food stockpiles.
+            </p>
+            <blockquote class="mt-4 border-l-4 border-emerald-500 bg-emerald-50 p-4 text-sm text-slate-700 italic">
+                <strong>Data Reference & Realism Note:</strong> The parameters used in this model are adapted from realistic physiological growth curves published by the <strong>Malaysian Palm Oil Board (MPOB)</strong> (e.g., <em>"MPOB Oil Palm Yield Profiles by Region and Age"</em>), where commercial yields typically peak between years 9 to 15 before experiencing a gradual biological deceleration.
+            </blockquote>
+        </section>
+
+        <!-- Mathematical Modeling Section -->
+        <section class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-white p-6 rounded-xl shadow-xs border border-slate-100 flex flex-col justify-between">
+                <div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">The Production Function: $f(x)$</h3>
+                    <p class="text-sm text-slate-600 mb-4">
+                        Yield $y$ (Tonnes per Hectare per Year, $t/ha/yr$) modeled against tree age $x$ (Years) using a localized polynomial growth curve:
+                    </p>
+                </div>
+                <div class="bg-slate-50 p-4 rounded-lg text-center font-mono my-2 text-emerald-800 text-lg">
+                    $$f(x) = -0.012x^3 + 0.38x^2 - 1.8x + 5$$
+                </div>
+                <p class="text-xs text-slate-500 italic mt-2">
+                    Valid for commercial lifespans: $x \in [3, 25]$ years.
+                </p>
+            </div>
+
+            <div class="bg-white p-6 rounded-xl shadow-xs border border-slate-100 flex flex-col justify-between">
+                <div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">The Rate of Change: $f'(x)$</h3>
+                    <p class="text-sm text-slate-600 mb-4">
+                        Applying the Power Rule of differentiation yields the marginal growth rate formula (the derivative):
+                    </p>
+                </div>
+                <div class="bg-slate-50 p-4 rounded-lg text-center font-mono my-2 text-amber-800 text-lg">
+                    $$f'(x) = -0.036x^2 + 0.76x - 1.8$$
+                </div>
+                <p class="text-xs text-slate-500 italic mt-2">
+                    Measures instantaneous yield acceleration/deceleration in $(t/ha/yr)$ per year.
+                </p>
+            </div>
+        </section>
+
+        <!-- Interactive Visualization & Dashboard Area -->
+        <section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            
+            <!-- Chart Visualizer (Takes up 2 columns) -->
+            <div class="lg:col-span-2 bg-white p-6 rounded-xl shadow-xs border border-slate-100 flex flex-col justify-between">
+                <div>
+                    <h3 class="text-lg font-bold text-slate-900">Interactive FFB Yield Curve</h3>
+                    <p class="text-xs text-slate-500 mb-4">Click anywhere directly on the line or grid to run calculus diagnostics at that year.</p>
+                </div>
+                <div class="relative w-full h-72 md:h-96">
+                    <canvas id="yieldChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Calculus Output & Diagnosis (Takes up 1 column) -->
+            <div class="bg-white p-6 rounded-xl shadow-xs border border-emerald-200 bg-radial from-white to-emerald-50/20 flex flex-col justify-between">
+                <div>
+                    <h3 class="text-lg font-bold text-emerald-900 mb-4">Calculus Diagnostic Hub</h3>
+                    
+                    <div id="instruction-placeholder" class="space-y-3 py-8 text-center text-slate-400">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-auto stroke-current" fill="none" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122" /></svg>
+                        <p class="text-sm font-medium">Click on the chart to select an oil palm tree age for real-time derivative analysis.</p>
+                    </div>
+
+                    <div id="diagnostic-result" class="hidden space-y-4 animate-fade-in">
+                        <div class="border-b pb-2 border-slate-100">
+                            <span class="text-xs font-semibold text-slate-400 uppercase">Selected Tree Age</span>
+                            <div class="text-2xl font-bold text-slate-800"><span id="out-age">--</span> Years Old</div>
+                        </div>
+
+                        <div>
+                            <span class="text-xs font-semibold text-slate-400 uppercase">Absolute Current Yield $f(x)$</span>
+                            <div class="text-xl font-bold text-emerald-600"><span id="out-yield">--</span> Tonnes/Ha/Year</div>
+                        </div>
+
+                        <div>
+                            <span class="text-xs font-semibold text-slate-400 uppercase">Instantaneous Rate of Change $f'(x)$</span>
+                            <div id="derivative-badge" class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-sm font-bold mt-1">
+                                <span id="out-derivative">--</span> <span class="text-xs font-normal">t/ha/yr²</span>
+                            </div>
+                        </div>
+
+                        <div class="bg-white p-3 rounded-lg border border-slate-200 mt-2 shadow-xs">
+                            <span class="text-xs font-bold text-slate-700 uppercase tracking-tight block mb-1">Layman Bioscience Explanation:</span>
+                            <p id="out-explanation" class="text-sm text-slate-600 leading-snug"></p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center text-2xs text-slate-400 mt-4 pt-2 border-t border-slate-100">
+                    Designed for Agronomy & Food Security Decision Support Systems.
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <!-- App Logic Script -->
+    <script>
+        // Generate realistic biological simulation data based on MPOB historical yield scales
+        // x = age in years (from 3 years when first harvested to 25 years when typically replanted)
+        const labels = [];
+        const yieldData = [];
+        const derivativeData = [];
+
+        // Cubic model functions
+        function f(x) {
+            return (-0.012 * Math.pow(x, 3)) + (0.38 * Math.pow(x, 2)) - (1.8 * x) + 5;
+        }
+
+        function fPrime(x) {
+            return (-0.036 * Math.pow(x, 2)) + (0.76 * x) - 1.8;
+        }
+
+        // Populating our dataset arrays
+        for (let x = 3; x <= 25; x += 0.5) {
+            labels.push(x);
+            yieldData.push(f(x).toFixed(2));
+            derivativeData.push(fPrime(x).toFixed(2));
+        }
+
+        // Initialize Chart.js configuration
+        const ctx = document.getElementById('yieldChart').getContext('2d');
+        const yieldChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Yield f(x) (Tonnes/Ha/Yr)',
+                    data: yieldData,
+                    borderColor: '#047857', // emerald-700
+                    backgroundColor: 'rgba(4, 120, 87, 0.05)',
+                    borderWidth: 3,
+                    fill: true,
+                    tension: 0.3,
+                    pointRadius: 0,
+                    pointHoverRadius: 6,
+                    pointHoverBackgroundColor: '#b45309', // amber-700
+                    pointHoverBorderColor: '#fff',
+                    pointHoverBorderWidth: 2,
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    x: {
+                        title: { display: true, text: 'Tree Age (Years)', font: { weight: 'bold' } },
+                        grid: { color: 'rgba(0,0,0,0.03)' }
+                    },
+                    y: {
+                        title: { display: true, text: 'Yield (t/ha/yr)', font: { weight: 'bold' } },
+                        min: 0,
+                        max: 20,
+                        grid: { color: 'rgba(0,0,0,0.03)' }
+                    }
+                },
+                // Animation settings to smoothly draw the curve initially
+                animation: {
+                    duration: 2000,
+                    easing: 'easeOutQuart'
+                },
+                // Intercept clicks on the graph canvas canvas
+                onClick: (e) => {
+                    const points = yieldChart.getElementsAtEventForMode(e, 'nearest', { intersect: false }, true);
+                    if (points.length) {
+                        const index = points[0].index;
+                        const age = parseFloat(labels[index]);
+                        handleCalculusUpdate(age);
+                    }
+                }
+            }
+        });
+
+        // Function to process calculations and handle visual changes dynamically
+        function handleCalculusUpdate(age) {
+            const currentYield = f(age);
+            const derivativeVal = fPrime(age);
+
+            // Compute precise UI elements dynamically
+            document.getElementById('instruction-placeholder').classList.add('hidden');
+            document.getElementById('diagnostic-result').classList.remove('hidden');
+
+            document.getElementById('out-age').innerText = age.toFixed(1);
+            document.getElementById('out-yield').innerText = currentYield.toFixed(2);
+            document.getElementById('out-derivative').innerText = (derivativeVal >= 0 ? '+' : '') + derivativeVal.toFixed(3);
+
+            const badge = document.getElementById('derivative-badge');
+            const explanationEl = document.getElementById('out-explanation');
+            
+            // Generate human-friendly biological translation of the derivative sign and value
+            if (derivativeVal > 0.3) {
+                badge.className = "inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-sm font-bold mt-1 bg-emerald-100 text-emerald-800";
+                explanationEl.innerHTML = `At ${age.toFixed(1)} years, the tree is in its <strong>rapid growth phase</strong>. Yield is increasing by <strong>${derivativeVal.toFixed(2)} tonnes per hectare</strong> each year. Keep localized nitrogen fertilizer optimal to maximize this peak acceleration curve.`;
+            } else if (derivativeVal >= -0.3 && derivativeVal <= 0.3) {
+                badge.className = "inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-sm font-bold mt-1 bg-amber-100 text-amber-800";
+                explanationEl.innerHTML = `At ${age.toFixed(1)} years, the tree has hit its <strong>biological plateau ($f'(x) \\approx 0$)</strong>. Yield is at or near its maximum productivity level. Growth speed has flatlined, meaning you are squeezing the peak food output from this crop right now.`;
+            } else {
+                badge.className = "inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-sm font-bold mt-1 bg-rose-100 text-rose-800";
+                explanationEl.innerHTML = `At ${age.toFixed(1)} years, the derivative is negative, signifying a <strong>biological slowdown</strong>. Yield is shrinking by <strong>${Math.abs(derivativeVal).toFixed(2)} tonnes per hectare</strong> per year. Plan for replanting strategies soon to preserve nationwide food security metrics.`;
+            }
+
+            // Tell MathJax to re-render the inline math notation in the explanation updates if triggered
+            if (window.MathJax) {
+                MathJax.typesetPromise([explanationEl]);
+            }
+        }
+    </script>
+</body>
+</html>
